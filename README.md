@@ -10,11 +10,12 @@ This is a respository of experiments with Unreal Engine 4
 - [x] export template to be used on other projects
 - [x] input keys
 - [x] grow/scale object
-- [ ] r key to rotate (rotations)
-- [ ] t to translate (translations)
+- [x] y key to rotate (rotations)
+- [x] t to translate (translations)
 - [ ] cross product
 - [ ] dot product
 - [ ] de project and project screen positions (outputs)
+- [ ] play with cameras
 - [ ] metrics
 - [ ] materials
 - [ ] Spawn an actor by C++ code

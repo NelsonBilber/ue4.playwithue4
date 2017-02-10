@@ -28,6 +28,8 @@ public:
 	void Move_YAxis(float AxisValue);
 	void StartGrowing();
 	void StopGrowing();
+	void Rotate_Yaw();
+	void Translate();
 
 	//Input variables
 	FVector CurrentVelocity;
@@ -35,5 +37,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	USceneComponent* OurVisibleComponent;
+	
 	
 };

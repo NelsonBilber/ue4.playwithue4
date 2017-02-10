@@ -7,7 +7,7 @@
 // Sets default values
 AMyPawn::AMyPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Set this pawn to be controlled by the lowest-numbered player
@@ -20,23 +20,21 @@ AMyPawn::AMyPawn()
 	OurVisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OurVisibleComponent"));
 	// Attach our camera and visible object to our root component. Offset and rotate the camera.
 	OurCamera->AttachTo(RootComponent);
-	OurCamera->SetRelativeLocation(FVector(-250.0f, 0.0f, 250.0f));
+	OurCamera->SetRelativeLocation(FVector(-250.0f, 0.0f, 350.0f));
 	OurCamera->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
 	OurVisibleComponent->AttachTo(RootComponent);
 
 }
 
 // Called when the game starts or when spawned
-void AMyPawn::BeginPlay()
-{
+void AMyPawn::BeginPlay() {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
-void AMyPawn::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
+void AMyPawn::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
 
 	// Handle growing and shrinking based on our "Grow" action
 	{
@@ -75,33 +73,51 @@ void AMyPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	// Respond when our "Grow" key is pressed or released.
 	InputComponent->BindAction("Grow", IE_Pressed, this, &AMyPawn::StartGrowing);
 	InputComponent->BindAction("Grow", IE_Released, this, &AMyPawn::StopGrowing);
+	//RotateYaw
+	InputComponent->BindAction("RotateYaw", IE_Pressed, this, &AMyPawn::Rotate_Yaw);
+	//translate
+	InputComponent->BindAction("Translate", IE_Pressed, this, &AMyPawn::Translate);
 
 	// Respond every frame to the values of our two movement axes, "MoveX" and "MoveY".
 	InputComponent->BindAxis("MoveX", this, &AMyPawn::Move_XAxis);
 	InputComponent->BindAxis("MoveY", this, &AMyPawn::Move_YAxis);
 
+
 }
 
-void AMyPawn::Move_XAxis(float AxisValue)
-{
+void AMyPawn::Move_XAxis(float AxisValue) {
 	// Move at 100 units per second forward or backward
 	CurrentVelocity.X = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
 }
 
-void AMyPawn::Move_YAxis(float AxisValue)
-{
+void AMyPawn::Move_YAxis(float AxisValue) {
 	// Move at 100 units per second right or left
 	CurrentVelocity.Y = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
 }
 
-void AMyPawn::StartGrowing()
-{
+void AMyPawn::StartGrowing() {
 	bGrowing = true;
 }
 
-void AMyPawn::StopGrowing()
-{
+void AMyPawn::StopGrowing() {
 	bGrowing = false;
 }
+
+void AMyPawn::Rotate_Yaw() {
+	
+	FRotator ActorRotation = GetActorRotation();
+	ActorRotation.Yaw += 45.0f;
+
+	SetActorRotation(ActorRotation);
+}
+
+void AMyPawn::Translate() {
+
+	FVector ActorLocation = GetActorLocation();
+	ActorLocation.Y += 45.0f;
+
+	SetActorLocation(ActorLocation);
+}
+
 
 
